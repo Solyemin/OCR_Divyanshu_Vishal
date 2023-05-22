@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div class="container">
+    <header>Character Recognition</header>
+    <form method="POST" action="{{ url_for('index')}}" enctype="multipart/form-data">
+        
+        <div id="select-area">
+                <input class="file-input" type="file" name="file" hidden required>
+                <i class="fas fa-file-image"></i>
+                <p>Select JPG,PNG,JPEG</p>
+        </div> 
+        {% if mimetype %}
+                <script>
+                    alert("mimetype is not matched {{ mimetype }}");
+                </script>
+        {% endif %}
+        
+        
+         <!-- second part after main.js fileInput,click() -->
+         <div class="preview">
+            <img id="file-preview">
+            <!-- if i select a wrong image or i wana delet that image  -->
+            <i class="fas fa-trash" id="remove-img"></i>
+         </div>
+         <div id="select-char">
+            <p>Enter a character</p>
+            <input class="file-input" type="text" id="fname"name="fname" maxlength="10" required>
+        </div>
+        {% if filename %}
+         <a href="{{ filename }}" download class="btn-convert" id="download-btn">Download</a>
+         <a href="{{ url_for('index') }}" class="btn-convert" id="Reset">Reset</a>
+        <script>
+            preview=document.getElementById("file-preview");
+            preview.src = "{{ filename }}";
+            document.getElementById("select-area").style.display = "none";
+            document.getElementById("select-char").style.display="none";
+        </script>
+        {% else %}
+            <input type="submit" id="validate" class="btn-convert" value="Process">
+        {% endif %}
+    </form>
+</div>
+ 
+{% endblock %}
